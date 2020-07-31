@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component } from 'react';
 import { IconButton, Grid } from '@material-ui/core';
 import CustomSlider from './Slider';
 // import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';

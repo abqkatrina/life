@@ -104,7 +104,7 @@ export default function CustomSlider() {
     <div className={classes.root}>
      
       <Typography gutterBottom>Adjust Speed</Typography>
-      <Slider1 valueLabelDisplay="auto" aria-label="adjust speed slider" defaultValue={1} />
+      <Slider1 valueLabelDisplay="auto" aria-label="adjust speed slider" marks={marks} min={1} max={10} defaultValue={1} />
 
     </div>
   );

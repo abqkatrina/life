@@ -1,24 +1,90 @@
-.App {
+.world-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  background: #C5DEC6;
+  padding: 2%
+  
+}
+
+.control-container {
+  display: flex;
+  flex-flow: row wrap;
+  width: 80%;
+}
+
+/* .label {
+  display: flex;
+  margin-bottom: 16px;
+  margin-right: 10px;
+  width: 30%
+} */
+
+/* .input {
+  margin: 2% auto;
+  border: solid 2px green;
+  width: 100%;
+} */
+
+.grid-container {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  padding: 1.6rem;
+  margin: 2rem, auto;
+  border-spacing: 0;
+}
+
+#generation {
+  color: white;
+  width: 89%;
+  margin: 0 auto
+ 
+}
+
+#controls {
+  color: white;
+  border: solid 1px white;
+  border-radius: 5px;
+  width: 90%;
+  margin: 1% auto;
   text-align: center;
+  display: flex;
+  justify-content: space-evenly;
+  
+
 }
-/* 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+
+.dead-cell {
+  display: flex;
+  padding: 10px;
+  border-spacing: 0;
+  border: solid 1px rgba(36, 36, 36, 0.479);
+  background: transparent;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-} */
+.live-cell {
+  display: flex;
+  padding: 10px;
+  border-spacing: 0;
+  border: solid 1px rgba(36, 36, 36, 0.479);
+  -webkit-animation: live-cell 2s linear infinite alternate both;
+        animation: live-cell 2s linear infinite alternate both;
 
-
-/* @keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-} */
+}
+@-webkit-keyframes live-cell {
+0% {
+  background: #00b09b;
+}
+100% {
+  background: #96c93d;
+}
+}
+@keyframes live-cell {
+0% {
+  background: #00b09b;
+}
+100% {
+  background: #96c93d;
+}
+}

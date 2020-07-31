@@ -1,93 +1,93 @@
-export default class Game {
+export default class Rules {
     constructor(generation = 0, liveCells = new Map()) {
-        this.generation = generation;
-        this.liveCells = liveCells;
-        this.nextGeneration = new Map();
-        this.deadCells = new Map();
+      this.generation = generation;
+      this.liveCells = liveCells;
+      this.nextGeneration = new Map();
+      this.deadCells = new Map();
     }
-  
+  //
     getGeneration() {
-        return this.generation;
+      return this.generation;
     }
   
     getLiveCells() {
-        return this.liveCells;
+      return this.liveCells;
     }
   
-    addCell(position) {
-        this.liveCells.set(position.x + " , " + position.y, {x: position.x, y: position.y});
+    addCell(pos) {
+      this.liveCells.set(pos.x + " , " + pos.y, {x: pos.x, y: pos.y});
     }
   
-    removeCell(position) {
-        this.liveCells.delete(position);
+    killCell(pos) {
+      this.liveCells.delete(pos);
     }
   
-    isCellAlive(position) {
-        return this.liveCells.has(position);
+    isLiving(pos) {
+      return this.liveCells.has(pos);
     }
+
+    saveCell(pos) {
+      if(this.isLiving(pos.x + " , " + pos.y)) {
+        this.killCell(pos.x + " , " + pos.y);
+      } else {
+        this.addCell(pos);
+      }
   
-    storeCell(position) {
-        if(this.isCellAlive(position.x + " , " + position.y)) {
-            this.removeCell(position.x + " , " + position.y);
-        } else {
-            this.addCell(position);
-        }
-    
-        return(new Game(this.generation, this.liveCells));
+      return new Rules(this.generation, this.liveCells);
     }
   
     addGeneration(){
-        this.liveCells.forEach((item) => {
-            this.calculateLiveNeighbors(item);
-        })
-    
-        this.deadCells.forEach((item) => {
-            this.calculateDeadNeighbors(item);
-        })
-    
-        this.generation++;
-    
-        return(new Game(this.generation, this.nextGeneration))
+      this.liveCells.forEach((item) => {
+        this.countLivingNeighbors(item);
+      })
+  
+      this.deadCells.forEach((item) => {
+        this.countDeadNeighbors(item);
+      })
+  
+      this.generation++;
+  
+      return new Rules(this.generation, this.nextGeneration)
     }
   
-    calculateLiveNeighbors(position) {
-        var liveNeighbors = 0;
-    
-        for(var i = position.x - 1; i <= position.x + 1; i++){
-            for(var j = position.y - 1; j <= position.y + 1; j++){
-            
-                if(i === position.x && j === position.y)
-                    continue;
-        
-                if(this.isCellAlive(i + " , " + j)){
-                    liveNeighbors++;
-                } else {
-                    this.deadCells.set(i + " , " +j, {x: i, y: j})
-                }
+    countLivingNeighbors(pos) {
+      var liveNeighbors = 0;
+  
+      for(var i = pos.x - 1; i <= pos.x + 1; i++){
+        for(var j = pos.y - 1; j <= pos.y + 1; j++){
+          
+          if(i === pos.x && j === pos.y)
+            continue;
+  
+          if(this.isLiving(i + " , " + j)){
+              liveNeighbors++;
+          } else {
+            this.deadCells.set(i + " , " +j, {x: i, y: j})
+          }
+        }
+      }
+  
+      if((liveNeighbors === 2 || liveNeighbors === 3))
+        this.nextGeneration.set(pos.x + " , " + pos.y, {x: pos.x, y: pos.y});
+    }
+  
+    countDeadNeighbors(pos) {
+      var liveNeighbors = 0;
+  
+      for(var i = pos.x - 1; i <= pos.x + 1; i++){
+        for(var j = pos.y - 1; j <= pos.y + 1; j++){
+  
+          if(i === pos.x && j === pos.y)
+            continue;
+  
+          if(this.isLiving(i + " , " + j)){
+              liveNeighbors++;
             }
+          }
         }
-    
-        if((liveNeighbors === 2 || liveNeighbors === 3))
-            this.nextGeneration.set(position.x + " , " + position.y, {x: position.x, y: position.y});
+  
+      if(liveNeighbors === 3)
+        this.nextGeneration.set(pos.x + " , " + pos.y, {x: pos.x, y: pos.y});
     }
   
-    calculateDeadNeighbors(position) {
-        var liveNeighbors = 0;
-  
-        for(var i = position.x - 1; i <= position.x + 1; i++){
-            for(var j = position.y - 1; j <= position.y + 1; j++){
-    
-                if(i === position.x && j === position.y)
-                    continue;
-    
-                if(this.isCellAlive(i + " , " + j)){
-                    liveNeighbors++;
-                }
-            }
-        }
-  
-        if(liveNeighbors === 3)
-            this.nextGeneration.set(position.x + " , " + position.y, {x: position.x, y: position.y});
-        }
-  
-    }
+  }
