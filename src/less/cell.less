@@ -1,0 +1,59 @@
+#cell{
+    width: 5px;
+    height: 5px;
+    background: @blue;
+    position: relative;
+    border: white;
+
+    //     function Cell() {
+//         var canvas = document.getElementById('grid');
+//         if (canvas.getContext) { 
+//           var ctx = canvas.getContext('2d');
+      
+//           // Filled triangle
+//           ctx.beginPath();
+//           ctx.moveTo(25, 25);
+//           ctx.lineTo(105, 25);
+//           ctx.lineTo(25, 105);
+//           ctx.lineTo(25, 105);
+//           ctx.lineTo(25, 105);
+//           ctx.lineTo(25, 105);
+//           ctx.lineTo(25, 105);
+//           ctx.lineTo(25, 105);
+//           ctx.fill();
+//         }
+//       }
+//    }
+    
+    :before {
+        content: "";
+        width: 5px;
+        height: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        border-bottom: 1px solid @blue;
+        border-left: 1px solid #eee;
+        border-right: 1px solid #eee;
+    }
+    
+    :after {
+        content: "";
+        width: 5px;
+        height: 0;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        border-top: 1px solid @blue;
+        border-left: 1px solid #eee;
+        border-right: 1px solid #eee;
+      }
+
+    .alive{
+        background-color: @green;
+    }
+
+    .dead{
+        background-color: black;
+    }
+}
