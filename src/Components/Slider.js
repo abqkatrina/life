@@ -30,46 +30,10 @@ ValueLabelComponent.propTypes = {
   value: PropTypes.number.isRequired,
 };
 
-const marks = [
-  {
-    value: 0,
-  },
-  {
-    value: 1,
-  },
-  {
-    value: 2,
-  },
-  {
-    value: 3,
-  },
-  {
-    value: 4,
-  },
-  {
-    value: 5,
-  },
-  {
-    value: 6,
-  },
-  {
-    value: 7,
-  },
-  {
-    value: 8,
-  },
-  {
-    value: 9,
-  },
-  {
-    value: 10,
-  },
-];
-
 const Slider1 = withStyles({
   root: {
     color: '#52af77',
-    height: 8,
+    height: 2,
   },
   thumb: {
     height: 24,
@@ -91,20 +55,28 @@ const Slider1 = withStyles({
     borderRadius: 4,
   },
   rail: {
-    height: 8,
-    borderRadius: 4,
+    webkitAnimation: 'live-cell 2s linear infinite alternate both',
+    animation: 'live-cell 2s linear infinite alternate both',
+    height: 10,
+    borderRadius: 5
   },
 })(Slider);
 
 
-export default function CustomSlider() {
+export default function CustomSlider(props) {
   const classes = useStyles();
+  const [value, setValue] = React.useState(500);
+
+
+  function changeInterval(e){
+    setValue(e.target.value)
+  }
 
   return (
     <div className={classes.root}>
      
-      <Typography gutterBottom>Adjust Speed</Typography>
-      <Slider1 valueLabelDisplay="auto" aria-label="adjust speed slider" marks={marks} min={1} max={10} defaultValue={1} />
+      <Typography id='discrete-slider' gutterBottom> Adjust Speed </Typography>
+      <Slider1 valueLabelDisplay="auto" aria-labelledby='discrete-slider' min={100} max={1000} step={100} defaultValue={500} onChange={changeInterval}/>
 
     </div>
   );

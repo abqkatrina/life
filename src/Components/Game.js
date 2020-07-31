@@ -1,4 +1,4 @@
-export default class Rules {
+export default class Game {
     constructor(generation = 0, liveCells = new Map()) {
       this.generation = generation;
       this.liveCells = liveCells;
@@ -14,26 +14,26 @@ export default class Rules {
       return this.liveCells;
     }
   
-    addCell(pos) {
-      this.liveCells.set(pos.x + " , " + pos.y, {x: pos.x, y: pos.y});
+    growCell(locus) {
+      this.liveCells.set(locus.x + " , " + locus.y, {x: locus.x, y: locus.y});
     }
   
-    killCell(pos) {
-      this.liveCells.delete(pos);
+    killCell(locus) {
+      this.liveCells.delete(locus);
     }
   
-    isLiving(pos) {
-      return this.liveCells.has(pos);
+    isLiving(locus) {
+      return this.liveCells.has(locus);
     }
-
-    saveCell(pos) {
-      if(this.isLiving(pos.x + " , " + pos.y)) {
-        this.killCell(pos.x + " , " + pos.y);
+  
+    saveCell(locus) {
+      if(this.isLiving(locus.x + " , " + locus.y)) {
+        this.killCell(locus.x + " , " + locus.y);
       } else {
-        this.addCell(pos);
+        this.growCell(locus);
       }
   
-      return new Rules(this.generation, this.liveCells);
+      return new Game(this.generation, this.liveCells);
     }
   
     addGeneration(){
@@ -47,47 +47,47 @@ export default class Rules {
   
       this.generation++;
   
-      return new Rules(this.generation, this.nextGeneration)
+      return new Game(this.generation, this.nextGeneration)
     }
   
-    countLivingNeighbors(pos) {
-      var liveNeighbors = 0;
+    countLivingNeighbors(locus) {
+      var liveNeighboors = 0;
   
-      for(var i = pos.x - 1; i <= pos.x + 1; i++){
-        for(var j = pos.y - 1; j <= pos.y + 1; j++){
+      for(var i = locus.x - 1; i <= locus.x + 1; i++){
+        for(var j = locus.y - 1; j <= locus.y + 1; j++){
           
-          if(i === pos.x && j === pos.y)
+          if(i === locus.x && j === locus.y)
             continue;
   
           if(this.isLiving(i + " , " + j)){
-              liveNeighbors++;
+              liveNeighboors++;
           } else {
             this.deadCells.set(i + " , " +j, {x: i, y: j})
           }
         }
       }
   
-      if((liveNeighbors === 2 || liveNeighbors === 3))
-        this.nextGeneration.set(pos.x + " , " + pos.y, {x: pos.x, y: pos.y});
+      if((liveNeighboors === 2 || liveNeighboors === 3))
+        this.nextGeneration.set(locus.x + " , " + locus.y, {x: locus.x, y: locus.y});
     }
   
-    countDeadNeighbors(pos) {
-      var liveNeighbors = 0;
+    countDeadNeighbors(locus) {
+      var liveNeighboors = 0;
   
-      for(var i = pos.x - 1; i <= pos.x + 1; i++){
-        for(var j = pos.y - 1; j <= pos.y + 1; j++){
+      for(var i = locus.x - 1; i <= locus.x + 1; i++){
+        for(var j = locus.y - 1; j <= locus.y + 1; j++){
   
-          if(i === pos.x && j === pos.y)
+          if(i === locus.x && j === locus.y)
             continue;
   
           if(this.isLiving(i + " , " + j)){
-              liveNeighbors++;
+              liveNeighboors++;
             }
           }
         }
   
-      if(liveNeighbors === 3)
-        this.nextGeneration.set(pos.x + " , " + pos.y, {x: pos.x, y: pos.y});
+      if(liveNeighboors === 3)
+        this.nextGeneration.set(locus.x + " , " + locus.y, {x: locus.x, y: locus.y});
     }
   
   }

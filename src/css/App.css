@@ -3,6 +3,7 @@
   flex-direction: column;
   flex: 1;
   background: #C5DEC6;
+  color: navy;
   padding: 2%
   
 }
@@ -10,7 +11,7 @@
 .control-container {
   display: flex;
   flex-flow: row wrap;
-  width: 80%;
+  width: 50%;
 }
 
 /* .label {
@@ -36,23 +37,21 @@
 }
 
 #generation {
-  color: white;
+  
   width: 89%;
   margin: 0 auto
  
 }
 
 #controls {
-  color: white;
+  
   border: solid 1px white;
   border-radius: 5px;
-  width: 90%;
-  margin: 1% auto;
-  text-align: center;
+  width: 60%;
+  margin: 5% auto;
+  text-align: baseline;
   display: flex;
   justify-content: space-evenly;
-  
-
 }
 
 .dead-cell {
