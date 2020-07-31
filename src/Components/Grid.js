@@ -41,7 +41,7 @@ export default class Grid extends Component {
     start = () => {
         console.log('start game')
         if (!this.state.isPlaying) {
-            //if empty grid, run randomly
+            //TODO: if empty grid, run randomly
             this.setState({
                 isRandom: false,
                 isPlaying: true,
@@ -54,7 +54,7 @@ export default class Grid extends Component {
     startRandom = () => {
         console.log('start random game')
         if (!this.state.isPlaying) {
-            //if empty grid, run randomly
+            //TODO: if empty grid, run randomly
             this.setState({
                 isRandom: true,
                 isPlaying: true,
@@ -95,36 +95,55 @@ export default class Grid extends Component {
     createGrid = () => {
         var newWorld = [];
         var cellRow = [];
-        
-        for (var i = 0; i < this.state.size[0]; i++) {
-            for (var j = 0; j < this.state.size[1]; j++) {
-                if(!this.state.isRandom){
-                    if (this.state.world.isLiving(i + " , " + j)) {
-                        cellRow.push(
-                           <Cell key={[i, j]} position={{ x: i, y: j }} live={true} saveCell={this.saveCell.bind(this)} />
-                        );
-                    } else {
-                        cellRow.push(
-                           <Cell key={[i, j]} position={{ x: i, y: j }} live={false} saveCell={this.saveCell.bind(this)} />
-                        );
-                    }
-                } else {
-                    let rand = Math.floor(Math.random()*2) 
+        //if the status is random
+        if(this.state.isRandom){
+            //loop every cell by combination of row and col
+            for (var i = 0; i < this.state.size[0]; i++) {
+                for (var j = 0; j < this.state.size[1]; j++) {
+                    //define a random binary
+                    var rand = Math.round(Math.random())
+                    //assign status values to 1 and 0
+                    //if rand is 0 save a dead
                     if(rand === 0){
                         cellRow.push(
-                        <Cell key={[i, j]} position={{ x: i, y: j }} live={true} saveCell={this.saveCell.bind(this)} />
-                        );
-                    } else {
-                        cellRow.push(
                             <Cell key={[i, j]} position={{ x: i, y: j }} live={false} saveCell={this.saveCell.bind(this)} />
-                         );
+                        )
+                    }else{
+                        //if rand is 1 save as true
+                        cellRow.push(
+                            <Cell key={[i, j]} position={{ x: i, y: j }} live={true} saveCell={this.saveCell.bind(this)} />
+                        );
                     }
-                }
-            newWorld.push(<div className="row" key={i}>{cellRow}</div>);
-            cellRow = [];
+                }//for each random loop...
+                newWorld.push(<div className="row" key={i}>{cellRow}</div>);
+                cellRow = []
+            }
         }
 
-        return newWorld;}
+        //if state is not random
+        if(!this.state.isRandom){
+            //loop every cell by combination of row and col
+            for (var x = 0; x < this.state.size[0]; x++) {
+                for (var y = 0; y < this.state.size[1]; y++) {
+                    //check if a cell is alive to save as true
+                    if (this.state.world.isLiving(x + " , " + j)) {
+                        cellRow.push(
+                        <Cell key={[x, y]} position={{ x: x, y: y }} live={true} saveCell={this.saveCell.bind(this)} />
+                        )
+                        //if alive is false, save as dead
+                    } else {
+                        cellRow.push(
+                        <Cell key={[x, y]} position={{ x: x, y: y }} live={false} saveCell={this.saveCell.bind(this)} />
+                        );
+                    }
+                }//for each non-random loop...
+                newWorld.push(<div className="row" key={i}>{cellRow}</div>);
+                cellRow = []
+            }
+        }
+
+        //random or not
+        return newWorld;
     }
 
     render() {
